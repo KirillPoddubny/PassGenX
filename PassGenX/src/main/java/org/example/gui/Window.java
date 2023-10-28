@@ -36,18 +36,35 @@ public class Window extends Thread {
                             PasswordGenerator password = new PasswordGenerator(8);
 
                             String pass = password.Generate();
+                            System.out.println("попытка генерации пароля: " + pass);
 
-                            int yesno = JOptionPane.showConfirmDialog(null, "хотите ли вы ввести логин? (программа создаст более надежный пароль)");
+                            int yesno = JOptionPane
+                                    .showConfirmDialog(null, "хотите ли вы ввести логин? (программа создаст более надежный пароль)");
 
                             if (yesno == JOptionPane.YES_OPTION) {
-                                String login = JOptionPane.showInputDialog(null, "введите логин", "ваше имя или логин");
+                                String login = JOptionPane
+                                        .showInputDialog(null, "введите логин", "ваше имя или логин");
+
+                                char space = ' ';
+
+                                for (int i = 0; i < login.length(); i++) {
+                                    if (login.charAt(i) == space) {
+                                        JOptionPane
+                                                .showMessageDialog(null, "использовать пробел в логине нельзя");
+                                                System.out.println("генерация пароля провалилась: был использован пароль");
+                                        return;
+                                    }
+                                }
 
                                 if (login.length() > 10 || login.length() < 4) {
-                                    JOptionPane.showMessageDialog(null, "ваш логин не должен содержать менее 4 и более 10 символов!");
+                                    JOptionPane
+                                            .showMessageDialog(null, "ваш логин не должен содержать менее 4 и более 10 символов!");
+                                            System.out.println("генерация пароля провалилась: кол-во символов больше 10 или меньше 4");
                                     return;
                                 }
                                 else {
                                     pass = login + "_" + pass;
+                                    System.out.println("пароль был изменен: " + pass);
                                 }
                             }
 
@@ -55,15 +72,14 @@ public class Window extends Thread {
                             boolean isCreate = file.CreateFile(pass);
 
                             create.setText(pass);
+                            System.out.println("создан текстовый документ содержащий пароль: " + pass);
 
                             if (isCreate == false) {
                                 JOptionPane
                                         .showMessageDialog(null, "при генерации пароля появилась ошибка, попробуйте еще раз");
                             }
-
                             JOptionPane
                                     .showMessageDialog(null, "пароль: " + pass + "\n" + "так же ваш пароль записан в файле " + pass + ".txt");
-
                             create.setText("генерация (нажми)");
                         }
                         catch (Exception err) {
@@ -71,7 +87,7 @@ public class Window extends Thread {
                                     .showMessageDialog(null, "напишите корректное количество символов");
                         }
                         finally {
-                            System.out.println("попытка создания пароля");
+                            System.out.println("попытка завершения генерации пароля");
                         }
                     }
                 }
