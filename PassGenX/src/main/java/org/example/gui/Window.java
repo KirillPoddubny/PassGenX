@@ -51,7 +51,7 @@ public class Window extends Thread {
                                     if (login.charAt(i) == space) {
                                         JOptionPane
                                                 .showMessageDialog(null, "использовать пробел в логине нельзя");
-                                                System.out.println("генерация пароля провалилась: был использован пароль");
+                                                System.out.println("генерация пароля провалилась: был использован пробел");
                                         return;
                                     }
                                 }
